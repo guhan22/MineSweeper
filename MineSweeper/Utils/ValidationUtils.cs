@@ -1,7 +1,9 @@
 ﻿namespace MineSweeper.Utils
 {
+	// Utility methods for validation
 	public static class ValidationUtils
 	{
+		// Validate if user inputs are integer
 		public static bool ValidateIntInput(string? str, out int numb)
 		{
 			numb = 0;
@@ -10,6 +12,7 @@
 				numb = result;
 			else
 			{
+				// Failed validation
 				Console.WriteLine("Incorect input.");
 				return false;
 			}
@@ -17,18 +20,24 @@
 			return true;
 		}
 
+		// Validate if user inputs are alphanumeric
 		public static bool ValidateAlphaNumericInput(string? str, int gridSize, out int[] coordinates)
 		{
 			coordinates = [];
 
+			// Input should be 2 characters long
 			if (!string.IsNullOrEmpty(str) && str.Length == 2)
 			{
 				List<int> tempCoordinates = [];
+
+				// First character shoul be alphabet
 				try
 				{
 					int row = char.ToUpper(str[0]) - 'A';
+					// Should not be greater than the grid size
 					if (row > gridSize)
 					{
+						// Failed validation
 						Console.WriteLine("Incorect input.");
 						return false;
 					}
@@ -37,14 +46,18 @@
 				}
 				catch (Exception)
 				{
+					// Failed validation
 					Console.WriteLine("Incorect input.");
 					return false;
 				}
 
+				// First character shoul be integer
 				if (int.TryParse(str[1].ToString(), out int column))
 				{
+					// Should not be greater than the grid size
 					if (column > gridSize)
 					{
+						// Failed validation
 						Console.WriteLine("Incorect input.");
 						return false;
 					}
@@ -53,6 +66,7 @@
 				}
 				else
 				{
+					// Failed validation
 					Console.WriteLine("Incorect input.");
 					return false;
 				}
@@ -62,6 +76,7 @@
 			}
 			else
 			{
+				// Failed validation
 				Console.WriteLine("Incorect input.");
 				return false;
 			}
@@ -72,11 +87,13 @@
 			// Minimum grid size
 			if (gridSize < 2)
 			{
+				// Failed validation
 				Console.WriteLine("Minimum size of grid is 2.");
 				return false;
 			}
 			else if (gridSize > 10) // Maximum grid size
 			{
+				// Failed validation
 				Console.WriteLine("Maximum size of grid is 10.");
 				return false;
 			}
@@ -99,6 +116,7 @@
 			// Check if count is less than or equal to 35% of total grids
 			if (count > maxCount)
 			{
+				// Failed validation
 				Console.WriteLine("Maximum number is 35% of total sqaures.");
 				return false;
 			}

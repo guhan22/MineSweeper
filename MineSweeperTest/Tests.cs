@@ -11,6 +11,7 @@ namespace MineSweeperTest
 			// Arrange
 			int gridSize = 5;
 			int mineCount = 5;
+			int revealedCount = 0;
 
 			// Act
 			Board board = new(gridSize, mineCount);
@@ -20,6 +21,7 @@ namespace MineSweeperTest
 			{
 				Assert.That(board.gridSize, Is.EqualTo(gridSize));
 				Assert.That(board.mineCount, Is.EqualTo(mineCount));
+				Assert.That(board.revealedCount, Is.EqualTo(revealedCount));
 				Assert.That(board.grids, Is.Not.Null);
 			});
 			Assert.Multiple(() =>

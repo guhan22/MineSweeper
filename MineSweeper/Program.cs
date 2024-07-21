@@ -3,6 +3,7 @@ using MineSweeper.Utils;
 
 class Program
 {
+	// Read and validate user inputs during board creation and mines plotting
 	public static void ProcessSetupInput(string msg, bool isValid, out int output)
 	{
 		output = 0;
@@ -14,6 +15,7 @@ class Program
 		}
 	}
 
+	// Read and validate user inputs during game play
 	public static void ProcessRevealInput(string msg, bool isValid, int gridSize, out int[] output)
 	{
 		output = [];
@@ -27,6 +29,7 @@ class Program
 
 	static void Main(string[] args)
 	{
+		// Start over after game completion
 		while (true)
 		{
 			int gridSize = 0, mineCount = 0;
@@ -52,28 +55,31 @@ class Program
 
 			Console.WriteLine();
 
+			// Create the board based on user inputs
 			Board board = new(gridSize, mineCount);
 
 			Console.WriteLine("Here is your minefield:");
 			BoardUtils.PrintBoard(board);
 			Console.WriteLine();
 
+			// Game play
 			while (!gameOver)
 			{
 				ProcessRevealInput("Select a square to reveal (e.g. A1):", false, gridSize, out int[] coordinates);
 
+				// Continue till mine detected (or) reveal all grids without mines
 				if (BoardUtils.RevealGrid(board, coordinates[0], coordinates[1]))
 				{
 					Console.WriteLine("Here is your updated minefield:");
 					BoardUtils.PrintBoard(board);
 
-					if (board.revealedCount == (gridSize * gridSize) - mineCount)
+					if (board.revealedCount == (gridSize * gridSize) - mineCount) // Game won
 					{
 						Console.WriteLine("Congratulations, you have won the game!");
 						gameOver = true;
 					}
 				}
-				else
+				else // Game lost
 				{
 					Console.WriteLine("Oh no, you detonated a mine! Game over.");
 					gameOver = true;
@@ -82,6 +88,7 @@ class Program
 				Console.WriteLine();
 			}
 
+			// Restart the game, press Ctrl + d to quit if user don't want to start over
 			Console.WriteLine("Press any key to play again...");
 
 			Console.ReadKey();

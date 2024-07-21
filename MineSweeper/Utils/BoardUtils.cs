@@ -2,14 +2,18 @@
 
 namespace MineSweeper.Utils
 {
+	// Utility methods for board operations
 	public static class BoardUtils
 	{
+		// Display initial board with hidden squares/grids in console
 		public static void PrintBoard(Board board)
 		{
+			// Columns in integer starting from 1
 			Console.WriteLine("  " + string.Join(" ", Enumerable.Range(1, board.gridSize).Select(x => x.ToString())));
 
 			for (int i = 0; i < board.gridSize; i++)
 			{
+				// Rows in uppercase alphabets starting from A
 				Console.Write((char)('A' + i) + " ");
 
 				for (int j = 0; j < board.gridSize; j++)
@@ -22,6 +26,7 @@ namespace MineSweeper.Utils
 			}
 		}
 
+		// Display the grid selected by the user along
 		public static bool RevealGrid(Board board, int row, int col)
 		{
 			if (row < 0 || row >= board.gridSize || col < 0 || col >= board.gridSize)
@@ -41,13 +46,14 @@ namespace MineSweeper.Utils
 			if (board.grids[row, col].IsMine)
 				return false;
 			else if (board.grids[row, col].AdjacentCount == 0)
-				RevealAdjacentGrids(board, row, col);
+				RevealAdjacentGrids(board, row, col); // Display adjacent grids which are not mines
 
 			Console.WriteLine($"This square contains {board.grids[row, col].AdjacentCount} adjacent mines.");
 			Console.WriteLine();
 			return true;
 		}
 
+		// Display adjacent grids which are not mines
 		private static void RevealAdjacentGrids(Board board, int row, int col)
 		{
 			for (int i = -1; i <= 1; i++)
@@ -61,7 +67,7 @@ namespace MineSweeper.Utils
 							board.grids[x, y].IsRevealed = true;
 							board.revealedCount++;
 							if (board.grids[x, y].AdjacentCount == 0)
-								RevealAdjacentGrids(board, x, y);
+								RevealAdjacentGrids(board, x, y); // Recursion
 						}
 				}
 		}

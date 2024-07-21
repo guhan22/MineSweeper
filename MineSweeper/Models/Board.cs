@@ -1,5 +1,6 @@
 ﻿namespace MineSweeper.Models
 {
+	// Class defenition of board
 	public class Board
 	{
 		public Grid[,] grids { get; set; }
